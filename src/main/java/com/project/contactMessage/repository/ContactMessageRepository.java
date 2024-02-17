@@ -24,6 +24,10 @@ public interface ContactMessageRepository extends JpaRepository<ContactMessage, 
     @Query("SELECT c FROM ContactMessage c WHERE FUNCTION('DATE', c.dateTime) BETWEEN ?1 and ?2" )
     List<ContactMessage> findMessagesBetweenDates(LocalDate beginDate, LocalDate endDate);
 
+    @Query("SELECT c FROM ContactMessage c WHERE " +
+            "(EXTRACT(HOUR FROM c.dateTime) BETWEEN :startH AND :endH) AND " +
+            "(EXTRACT(HOUR FROM c.dateTime) != :startH OR EXTRACT(MINUTE FROM c.dateTime) >= :startM) AND " +
+            "(EXTRACT(HOUR FROM c.dateTime) != :endH OR EXTRACT(MINUTE FROM c.dateTime) <= :endM)")
     List<ContactMessage> findMessagesBetweenTimes(int startH, int startM, int endH, int endM);
 
 

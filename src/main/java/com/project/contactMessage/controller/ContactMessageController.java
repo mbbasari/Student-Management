@@ -86,7 +86,7 @@ public class ContactMessageController {
 
     }
 
-    @GetMapping("/getById/{contactMEssageId}")//http://localhost:8080/contactMessages/getById/1
+    @GetMapping("/getById/{contactMessageId}")//http://localhost:8080/contactMessages/getById/1
     public ResponseEntity<ContactMessage> getByIdWithPath(@PathVariable Long contactMessageId) {
     return ResponseEntity.ok(contactMessageService.getContactMessageById(contactMessageId));
     }

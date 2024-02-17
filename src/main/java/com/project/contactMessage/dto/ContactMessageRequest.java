@@ -38,7 +38,7 @@ public class ContactMessageRequest {
     private String subject;
 
     @NotNull(message = "Please enter message ")
-    @Size(min = 4, max = 50, message = "Your subject should be at least 16 characters")
+    @Size(min = 4, max = 50, message = "Your message should be between 4 and 50 characters")
     @Pattern(regexp = "\\A(?!\\s*\\Z).+" ,message="Your message must consist of the characters .")
     private String message;
 
