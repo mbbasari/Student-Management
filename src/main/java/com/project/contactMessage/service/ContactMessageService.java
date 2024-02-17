@@ -97,4 +97,18 @@ public ResponseMessage<ContactMessageResponse> save(ContactMessageRequest reques
             throw new ConflictException(Messages.WRONG_DATE_FORMAT);
         }
     }
+
+
+    public List<ContactMessage> searchBetweenTimes(String startHour, String startMinute, String endHour, String endMinute) {
+        try {
+            int startH=Integer.parseInt(startHour);
+            int startM=Integer.parseInt(startMinute);
+            int endH=Integer.parseInt(endHour);
+            int endM=Integer.parseInt(endMinute);
+
+            return contactMessageRepository.findMessagesBetweenTimes(startH, startM, endH, endM);
+        } catch (NumberFormatException e) {
+            throw new ConflictException(Messages.WRONG_TIME_FORMAT);
+        }
+    }
 }

@@ -100,7 +100,20 @@ public class ContactMessageController {
     return ResponseEntity.ok(contactMessages);
         }
 
+    @GetMapping("/searchBetweenTimes")//http://localhost:8080/contactMessages/searchBetweenTimes?startHour=09&startMinute=00
+    public ResponseEntity<List<ContactMessage>> searchBetweenTimes(
+            @RequestParam(value = "startHour") String startHour,
+            @RequestParam(value = "startMinute") String startMinute,
+            @RequestParam(value = "endHour") String  endHour,
+            @RequestParam(value = "endMinute") String  endMinute
+    ){
+
+        List<ContactMessage> contactMessages=contactMessageService.searchBetweenTimes(startHour, startMinute, endHour,endMinute);
+   return ResponseEntity.ok(contactMessages);
     }
+
+
+}
 
 
 

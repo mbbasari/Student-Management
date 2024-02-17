@@ -24,4 +24,7 @@ public interface ContactMessageRepository extends JpaRepository<ContactMessage, 
     @Query("SELECT c FROM ContactMessage c WHERE FUNCTION('DATE', c.dateTime) BETWEEN ?1 and ?2" )
     List<ContactMessage> findMessagesBetweenDates(LocalDate beginDate, LocalDate endDate);
 
+    List<ContactMessage> findMessagesBetweenTimes(int startH, int startM, int endH, int endM);
+
+
 }
