@@ -3,6 +3,7 @@ package com.project.entity.concretes.user;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.entity.concretes.business.StudentInfo;
 import com.project.entity.enums.Gender;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -71,7 +73,8 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UserRole userRole;
 
-
+    @OneToMany(mappedBy = "teacher",cascade = CascadeType.REMOVE)
+    private List<StudentInfo> studentInfos;
 
 
 
