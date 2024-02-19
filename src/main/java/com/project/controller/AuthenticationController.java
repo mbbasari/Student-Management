@@ -3,6 +3,7 @@ package com.project.controller;
 import com.project.payload.request.LoginRequest;
 
 import com.project.payload.response.AuthResponse;
+import com.project.payload.response.UserResponse;
 import com.project.service.AuthenticationService;
 import com.project.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -26,9 +28,15 @@ private final AuthenticationService authenticationService;
 public ResponseEntity<AuthResponse> authenticateUser(@RequestBody @Valid LoginRequest loginRequest){
 
 return authenticationService.authenticateUser(loginRequest);
-
-
-
 }
+
+@GetMapping("/user") //http://localhost:8080/auth/user
+
+    public ResponseEntity<UserResponse>findByUsername(HttpServletRequest request){
+    String username= (String) request.getAttribute("username");
+   UserResponse userResponse= authenticationService.findByUsername(username);
+   return ResponseEntity.ok(userResponse);
+}
+
 
 }

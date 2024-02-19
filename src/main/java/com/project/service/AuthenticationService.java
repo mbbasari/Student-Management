@@ -1,7 +1,10 @@
 package com.project.service;
 
+import com.project.entity.concretes.user.User;
+import com.project.payload.mappers.UserMapper;
 import com.project.payload.request.LoginRequest;
 import com.project.payload.response.AuthResponse;
+import com.project.payload.response.UserResponse;
 import com.project.repository.UserRepository;
 import com.project.security.jwt.JwtUtils;
 import com.project.security.service.UserDetailsImpl;
@@ -25,6 +28,7 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;;
     private final JwtUtils jwtUtils;
+    private final UserMapper userMapper;
 
 
     public ResponseEntity<AuthResponse> authenticateUser(LoginRequest loginRequest) {
@@ -60,6 +64,8 @@ public class AuthenticationService {
     }
 
 
-
-
+    public UserResponse findByUsername(String username) {
+        User user= userRepository.findByUsername(username);
+        return  userMapper.mapUserToUserResponse(user);
+    }
 }
