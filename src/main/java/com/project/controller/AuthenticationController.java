@@ -1,7 +1,9 @@
 package com.project.controller;
 
+import com.project.payload.messages.SuccessMessages;
 import com.project.payload.request.LoginRequest;
 
+import com.project.payload.request.business.UpdatePasswordRequest;
 import com.project.payload.response.AuthResponse;
 import com.project.payload.response.UserResponse;
 import com.project.service.AuthenticationService;
@@ -36,6 +38,17 @@ return authenticationService.authenticateUser(loginRequest);
     String username= (String) request.getAttribute("username");
    UserResponse userResponse= authenticationService.findByUsername(username);
    return ResponseEntity.ok(userResponse);
+}
+
+
+@PatchMapping("/updatePassword") //http://localhost:8080/auth/updatePassword
+public ResponseEntity<String> updatePassword(@RequestBody @Valid UpdatePasswordRequest updatePasswordRequest,
+                                             HttpServletRequest request){
+
+    authenticationService.updatePassword(updatePasswordRequest,request);
+    String response = SuccessMessages.PASSWORD_CHANGED_RESPONSE_MESSAGE;
+    return ResponseEntity.ok(response);
+
 }
 
 

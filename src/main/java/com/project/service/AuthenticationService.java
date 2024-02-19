@@ -1,8 +1,11 @@
 package com.project.service;
 
 import com.project.entity.concretes.user.User;
+import com.project.exception.BadRequestException;
 import com.project.payload.mappers.UserMapper;
+import com.project.payload.messages.ErrorMessages;
 import com.project.payload.request.LoginRequest;
+import com.project.payload.request.business.UpdatePasswordRequest;
 import com.project.payload.response.AuthResponse;
 import com.project.payload.response.UserResponse;
 import com.project.repository.UserRepository;
@@ -15,8 +18,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,6 +34,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;;
     private final JwtUtils jwtUtils;
     private final UserMapper userMapper;
+    private  final PasswordEncoder passwordEncoder;
 
 
     public ResponseEntity<AuthResponse> authenticateUser(LoginRequest loginRequest) {
@@ -67,5 +73,22 @@ public class AuthenticationService {
     public UserResponse findByUsername(String username) {
         User user= userRepository.findByUsername(username);
         return  userMapper.mapUserToUserResponse(user);
+    }
+
+    public void updatePassword(UpdatePasswordRequest updatePasswordRequest, HttpServletRequest request) {
+        String userName = (String) request.getAttribute("username");
+        User user = userRepository.findByUsername(userName);
+
+        if(Boolean.TRUE.equals(user.getBuilt_in())){
+            throw new BadRequestException(ErrorMessages.NOT_PERMITTED_METHOD_MESSAGE);
+        }
+
+if(!passwordEncoder.matches(updatePasswordRequest.getOldPassword(),user.getPassword())){
+    throw  new BadRequestException(ErrorMessages.PASSWORD_SHOULD_NOT_MATCHED);
+}
+
+        user.setPassword(passwordEncoder.encode(updatePasswordRequest.getNewPassword()));
+        userRepository.save(user);
+
     }
 }
