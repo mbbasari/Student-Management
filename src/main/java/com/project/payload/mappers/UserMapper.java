@@ -1,6 +1,7 @@
 package com.project.payload.mappers;
 
 import com.project.entity.concretes.user.User;
+import com.project.payload.request.abstracts.BaseUserRequest;
 import com.project.payload.response.UserResponse;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,27 @@ public class UserMapper {
                 .email(user.getEmail())
                 .userRole(user.getUserRole().getRoleType().name())
                 .build();
+
+    }
+
+
+    public User mapUserRequestToUser(BaseUserRequest userRequest){
+        return User.builder()
+                .username(userRequest.getUsername())
+                .name(userRequest.getName())
+                .surname(userRequest.getSurname())
+                .password(userRequest.getPassword())
+                .ssn(userRequest.getSsn())
+                .birthDay(userRequest.getBirthDay())
+                .birthPlace(userRequest.getBirthPlace())
+                .phoneNumber(userRequest.getPhoneNumber())
+                .gender(userRequest.getGender())
+                .email(userRequest.getEmail())
+                .built_in(userRequest.getBuildIn())
+                //since we will not save teacher with these ent-point
+
+                .build();
+
 
     }
 
