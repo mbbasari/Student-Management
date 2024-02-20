@@ -11,6 +11,7 @@ import com.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ return authenticationService.authenticateUser(loginRequest);
 }
 
 @GetMapping("/user") //http://localhost:8080/auth/user
-
+@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','STUDENT','TEACHER')")
     public ResponseEntity<UserResponse>findByUsername(HttpServletRequest request){
     String username= (String) request.getAttribute("username");
    UserResponse userResponse= authenticationService.findByUsername(username);
@@ -42,6 +43,7 @@ return authenticationService.authenticateUser(loginRequest);
 
 
 @PatchMapping("/updatePassword") //http://localhost:8080/auth/updatePassword
+@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','STUDENT','TEACHER')")
 public ResponseEntity<String> updatePassword(@RequestBody @Valid UpdatePasswordRequest updatePasswordRequest,
                                              HttpServletRequest request){
 

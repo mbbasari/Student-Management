@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -31,6 +32,8 @@ public class ContactMessageController {
     }
 
     @GetMapping("/getAll")//http://localhost:8080/contactMessages/getAll
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+
     public Page<ContactMessageResponse> getAll(
             @RequestParam(value = "page",defaultValue = "0") int page,
             @RequestParam(value = "size",defaultValue = "10") int size,
@@ -42,6 +45,8 @@ public class ContactMessageController {
     }
 
     @GetMapping("/searchByEmail")//http://localhost:8080/contactMessages/searchByEmail?email=aaa@bbb.com
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+
     public Page<ContactMessageResponse> searchByEmail(
             @RequestParam(value = "email") String email,
             @RequestParam(value = "page",defaultValue = "0") int page,
@@ -52,6 +57,7 @@ public class ContactMessageController {
     }
 
     @GetMapping("/searchBySubject")//http://localhost:8080/contactMessages/searchBySubject=deneme
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
 
     public Page<ContactMessageResponse> searchBySubject(
             @RequestParam(value = "subject") String subject,
@@ -64,6 +70,8 @@ public class ContactMessageController {
 
     }
     @DeleteMapping("/deleteById/{contactMessageId}")//http://localhost:8080/contactMessages/deleteById/1
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+
     public ResponseEntity<String> deleteById(@PathVariable("contactMessageId") Long contactMessageId) {
 
     String message=contactMessageService.deleteById(contactMessageId);
@@ -71,6 +79,8 @@ public class ContactMessageController {
     }
 
     @DeleteMapping("/deleteByIdParam")//http://localhost:8080/contactMessages/deleteByIdParam?contactMessageId=1
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+
     public ResponseEntity<String> deleteByIdPath(@RequestParam(value = "contactMessageId") Long contactMessageId) {
 
      String message=contactMessageService.deleteById(contactMessageId);
@@ -78,6 +88,8 @@ public class ContactMessageController {
     }
 
     @GetMapping("/getByIdParam")//http://localhost:8080/contactMessages/getByIdParam?contactMessageId=1
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+
     public ResponseEntity<ContactMessage> getByIdWithParam(
             @RequestParam(value = "contactMessageId") Long contactMessageId){
 
@@ -87,11 +99,15 @@ public class ContactMessageController {
     }
 
     @GetMapping("/getById/{contactMessageId}")//http://localhost:8080/contactMessages/getById/1
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+
     public ResponseEntity<ContactMessage> getByIdWithPath(@PathVariable Long contactMessageId) {
     return ResponseEntity.ok(contactMessageService.getContactMessageById(contactMessageId));
     }
 
     @GetMapping("/searchBetweenDates")//http://localhost:8080/contactMessages/searchBetweenDates
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+
     public ResponseEntity<List<ContactMessage>> searchBetweenDates(
             @RequestParam(value = "beginDate") String beginDateString,
             @RequestParam(value = "endDate") String endDateString
@@ -101,6 +117,8 @@ public class ContactMessageController {
         }
 
     @GetMapping("/searchBetweenTimes")//http://localhost:8080/contactMessages/searchBetweenTimes?startHour=09&startMinute=00
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+
     public ResponseEntity<List<ContactMessage>> searchBetweenTimes(
             @RequestParam(value = "startHour") String startHour,
             @RequestParam(value = "startMinute") String startMinute,

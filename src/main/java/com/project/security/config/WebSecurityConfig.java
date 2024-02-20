@@ -101,6 +101,7 @@ return authenticationProvider;
             "/css/**",
             "/js/**",
             "/contactMessages/save",
+            "/auth/login"
 
     };
 }
