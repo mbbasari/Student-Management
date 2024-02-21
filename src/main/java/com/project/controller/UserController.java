@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.payload.request.user.UserRequest;
+import com.project.payload.request.user.UserRequestWithoutPassword;
 import com.project.payload.response.ResponseMessage;
 import com.project.payload.response.UserResponse;
 import com.project.payload.response.abstracts.BaseUserResponse;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -68,5 +70,21 @@ public class UserController {
             @PathVariable Long userId){
         return userService.updateAdminDeanViceDeanByAdmin(userId,userRequest);
     }
+
+    @PatchMapping("/updateUser")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT','ASSISTANT_MANAGER')")
+    public ResponseEntity<String>updateUserForUsers(
+            @RequestBody @Valid UserRequestWithoutPassword userRequestWithoutPassword,
+            HttpServletRequest request){
+
+       return userService.updateUserForUser(userRequestWithoutPassword, request);
+    }
+
+    @GetMapping("/getUserByName")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT')")
+    public List<UserResponse> getUserByName(@RequestParam(name = "name") String userName){
+        return userService.getUserByName(userName);
+    }
+
 
 }

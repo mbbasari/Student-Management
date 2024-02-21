@@ -8,6 +8,7 @@ import com.project.payload.mappers.UserMapper;
 import com.project.payload.messages.ErrorMessages;
 import com.project.payload.messages.SuccessMessages;
 import com.project.payload.request.user.UserRequest;
+import com.project.payload.request.user.UserRequestWithoutPassword;
 import com.project.payload.response.ResponseMessage;
 import com.project.payload.response.UserResponse;
 import com.project.payload.response.abstracts.BaseUserResponse;
@@ -19,11 +20,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -128,6 +132,59 @@ if(userRole.equalsIgnoreCase(RoleType.ADMIN.name)){
     public ResponseMessage<BaseUserResponse> updateAdminDeanViceDeanByAdmin(Long userId, UserRequest userRequest) {
         User user= methodHelper.isUserExist(userId);
         methodHelper.checkBuiltIn(user);
-        uniquePropertyValidator.checkDuplicate();
+        uniquePropertyValidator.checkUniqueProperties(user, userRequest);
+        User updateUser=userMapper.mapUserRequestToUpdateUser(userRequest, userId);
+
+        updateUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        updateUser.setUserRole(user.getUserRole());
+       User savedUser= userRepository.save(updateUser);
+
+       BaseUserResponse baseUserResponse=userMapper.mapUserToUserResponse(savedUser);
+
+return ResponseMessage.<BaseUserResponse>builder()
+        .message(SuccessMessages.USER_UPDATE)
+        .status(HttpStatus.OK)
+        .object(baseUserResponse)
+        .build();
+
+
     }
+
+    public ResponseEntity<String> updateUserForUser(UserRequestWithoutPassword userRequest,
+                                                     HttpServletRequest request) {
+        String userName= (String) request.getAttribute("username");
+        User user=userRepository.findByUsername(userName);
+        methodHelper.checkBuiltIn(user);
+        uniquePropertyValidator.checkUniqueProperties(user, userRequest);
+
+        user.setUsername(userRequest.getUsername());
+        user.setBirthDay(userRequest.getBirthDay());
+        user.setEmail(userRequest.getEmail());
+        user.setPhoneNumber(userRequest.getPhoneNumber());
+        user.setBirthPlace(userRequest.getBirthPlace());
+        user.setGender(userRequest.getGender());
+        user.setName(userRequest.getName());
+        user.setSurname(userRequest.getSurname());
+        user.setSsn(userRequest.getSsn());
+
+        userRepository.save(user);
+
+        String message= SuccessMessages.USER_UPDATE;
+        return ResponseEntity.ok(message);
+
+    }
+
+
+    public List<UserResponse> getUserByName(String name) {
+
+        return userRepository.getUserByNameContaining(name)
+                .stream()
+                .map(userMapper::mapUserToUserResponse)
+                .collect(Collectors.toList());
+    }
+
+    public long countAllAdmins(){
+        return userRepository.countAllAdmins(RoleType.ADMIN);
+    }
+
 }
