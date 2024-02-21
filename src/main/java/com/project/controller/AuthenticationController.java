@@ -34,7 +34,7 @@ return authenticationService.authenticateUser(loginRequest);
 }
 
 @GetMapping("/user") //http://localhost:8080/auth/user
-@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER','STUDENT','TEACHER')")
+@PreAuthorize("hasAnyAuthority('Admin','MANAGER','ASSISTANT_MANAGER','STUDENT','TEACHER')")
     public ResponseEntity<UserResponse>findByUsername(HttpServletRequest request){
     String username= (String) request.getAttribute("username");
    UserResponse userResponse= authenticationService.findByUsername(username);

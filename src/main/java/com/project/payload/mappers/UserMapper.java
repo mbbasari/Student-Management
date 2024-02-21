@@ -2,6 +2,7 @@ package com.project.payload.mappers;
 
 import com.project.entity.concretes.user.User;
 import com.project.payload.request.abstracts.BaseUserRequest;
+import com.project.payload.request.user.TeacherRequest;
 import com.project.payload.request.user.UserRequest;
 import com.project.payload.response.UserResponse;
 import com.project.payload.response.abstracts.BaseUserResponse;
@@ -105,4 +106,42 @@ public class UserMapper {
 
               .build();
     }
+    public User mapTeacherRequestToUser(TeacherRequest teacherRequest){
+        return User.builder()
+               .username(teacherRequest.getUsername())
+               .name(teacherRequest.getName())
+               .surname(teacherRequest.getSurname())
+               .password(teacherRequest.getPassword())
+               .ssn(teacherRequest.getSsn())
+               .birthDay(teacherRequest.getBirthDay())
+               .birthPlace(teacherRequest.getBirthPlace())
+               .phoneNumber(teacherRequest.getPhoneNumber())
+               .gender(teacherRequest.getGender())
+               .email(teacherRequest.getEmail())
+               .built_in(teacherRequest.getBuildIn())
+               .isAdvisor(teacherRequest.getIsAdvisorTeacher())
+
+               .build();
+    }
+
+
+    public User mapTeacherRequestToUpdatedUser(TeacherRequest request, Long userId){
+        return User.builder()
+              .id(userId)
+              .username(request.getUsername())
+              .name(request.getName())
+              .surname(request.getSurname())
+              .password(request.getPassword())
+              .ssn(request.getSsn())
+              .birthDay(request.getBirthDay())
+              .birthPlace(request.getBirthPlace())
+              .phoneNumber(request.getPhoneNumber())
+              .gender(request.getGender())
+              .email(request.getEmail())
+              .isAdvisor(request.getIsAdvisorTeacher())
+              .build();
+
+    }
+
+
 }
