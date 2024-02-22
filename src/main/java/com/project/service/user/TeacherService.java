@@ -106,6 +106,29 @@ public class TeacherService {
     }
 
 
+    public ResponseMessage<UserResponse> deleteAdvisorTeacherById(Long teacherId) {
+
+      User teacher=  methodHelper.isUserExist(teacherId);
+                     methodHelper.checkRole(teacher,RoleType.TEACHER);
+                     methodHelper.checkAdvisor(teacher);
+                     teacher.setIsAdvisor(Boolean.FALSE);
+                     userRepository.save(teacher);
+
+                     List <User>allStudents=userRepository.findByAdvisorTeacherId(teacherId);
+
+                     if (!allStudents.isEmpty()){
+                         allStudents.forEach(student->student.setIsAdvisor(null));
+                     }
+
+
+                     return ResponseMessage.<UserResponse>builder()
+                                             .message(SuccessMessages.ADVISOR_TEACHER_DELETE)
+                                             .object(userMapper.mapUserToUserResponse(teacher))
+                                             .status(HttpStatus.OK)
+                                            .build();
+
+    }
+
 
 
 }
