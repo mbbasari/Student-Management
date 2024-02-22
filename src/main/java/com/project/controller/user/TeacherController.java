@@ -65,7 +65,12 @@ public class TeacherController {
         return teacherService.deleteAdvisorTeacherById(teacherId);
     }
 
+@GetMapping("/getAllAdvisorTeacher")
+@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+public List<UserResponse> getAllAdvisorTeacher() {
 
+        return teacherService.getAllAdvisorTeacher();
+    }
 
 
 }

@@ -2,6 +2,7 @@ package com.project.payload.mappers;
 
 import com.project.entity.concretes.user.User;
 import com.project.payload.request.abstracts.BaseUserRequest;
+import com.project.payload.request.user.StudentRequest;
 import com.project.payload.request.user.TeacherRequest;
 import com.project.payload.request.user.UserRequest;
 import com.project.payload.response.UserResponse;
@@ -142,6 +143,26 @@ public class UserMapper {
               .build();
 
     }
+
+    public User mapStudentRequestToUser(StudentRequest studentRequest){
+        return User.builder()
+                .fatherName(studentRequest.getFatherName())
+                .motherName(studentRequest.getMotherName())
+                .name(studentRequest.getName())
+                .surname(studentRequest.getSurname())
+                .password(studentRequest.getPassword())
+                .username(studentRequest.getUsername())
+                .ssn(studentRequest.getSsn())
+                .birthDay(studentRequest.getBirthDay())
+                .birthPlace(studentRequest.getBirthPlace())
+                .phoneNumber(studentRequest.getPhoneNumber())
+                .gender(studentRequest.getGender())
+                .email(studentRequest.getEmail())
+                .built_in(studentRequest.getBuildIn())
+                .build();
+
+    }
+
 
 
 }

@@ -130,5 +130,12 @@ public class TeacherService {
     }
 
 
+    public List<UserResponse> getAllAdvisorTeacher() {
 
+        return userRepository.findAllByAdvisor(Boolean.TRUE)
+                .stream()
+                .map(userMapper::mapUserToUserResponse)
+                .collect(Collectors.toList());
+
+    }
 }
