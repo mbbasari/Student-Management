@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT','ASSISTANT_MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
 
     public ResponseEntity<String> deleteUserById(@PathVariable Long id, HttpServletRequest httpRequest) {
     return ResponseEntity.ok(userService.deleteUserById(id, httpRequest));
@@ -72,7 +72,7 @@ public class UserController {
     }
 
     @PatchMapping("/updateUser")
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT','ASSISTANT_MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
     public ResponseEntity<String>updateUserForUsers(
             @RequestBody @Valid UserRequestWithoutPassword userRequestWithoutPassword,
             HttpServletRequest request){
@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @GetMapping("/getUserByName")
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
     public List<UserResponse> getUserByName(@RequestParam(name = "name") String userName){
         return userService.getUserByName(userName);
     }

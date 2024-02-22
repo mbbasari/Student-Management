@@ -2,6 +2,7 @@ package com.project.controller.user;
 
 import com.project.payload.request.user.TeacherRequest;
 import com.project.payload.response.ResponseMessage;
+import com.project.payload.response.UserResponse;
 import com.project.payload.response.user.StudentResponse;
 import com.project.payload.response.user.TeacherResponse;
 import com.project.service.user.TeacherService;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/teacher")
+@RequestMapping("/TEACHER")
 
 @RequiredArgsConstructor
 public class TeacherController {
@@ -26,7 +27,7 @@ public class TeacherController {
 
 
     @PostMapping("/save")
-    @PreAuthorize("hasAnyAuthority('Admin')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity <ResponseMessage<TeacherResponse>> saveTeacher(
             @RequestBody @Valid TeacherRequest teacherRequest) {
 
@@ -35,7 +36,7 @@ public class TeacherController {
     }
 
     @PutMapping("/update/{userId}")
-    @PreAuthorize("hasAnyAuthority('Admin','Dean','ViceDean')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT')")
     public ResponseMessage<TeacherResponse> updateTeacherByManagers(
             @RequestBody @Valid TeacherRequest teacherRequest, @PathVariable Long userId) {
 
@@ -43,10 +44,19 @@ public class TeacherController {
     }
 
 @GetMapping("/gelAllStudentByAdvisorUsername")
-@PreAuthorize("hasAnyAuthority('Teacher')")
-    public List<StudentResponse> getAllStudentByAdvisorTeacher(HttpServletRequest request) {
-String userName = request.getHeader("username");
-        return teacherService.getAllStudentByAdvisorTeacher(userName);
+@PreAuthorize("hasAnyAuthority('TEACHER')")
+    public List<StudentResponse> getAllStudentByAdvisorUsername(HttpServletRequest request) {
+    String userName = request.getHeader("username");
+    return teacherService.getAllStudentByAdvisorUsername(userName);
+
     }
+
+    @PatchMapping("/saveAdvisorTeacher/{teacherId")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+    public ResponseMessage<UserResponse> saveAdvisorTeacher(@PathVariable Long teacherId) {
+
+        return teacherService.saveAdvisorTeacher(teacherId);
+    }
+
 
 }
