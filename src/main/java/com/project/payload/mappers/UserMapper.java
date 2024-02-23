@@ -164,5 +164,11 @@ public class UserMapper {
     }
 
 
+    public User mapStudentRequestToUpdateUser(StudentRequest studentRequest, Long userId) {
 
+        User student=mapStudentRequestToUser(studentRequest);
+        student.setId(userId);
+        return student;
+
+    }
 }

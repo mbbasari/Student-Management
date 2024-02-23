@@ -15,9 +15,26 @@ public class SuccessMessages {
 
     public static final String TEACHER_SAVE = "Teacher is Saved successfully";
     public static final String TEACHER_UPDATE = "Teacher is updated successfully";
-    public static final String ADVISOR_TEACHER_SAVE = "Advisor Teacher is Saved";
 
+
+    public static final String ADVISOR_TEACHER_SAVE = "Advisor Teacher is Saved";
     public static final String ADVISOR_TEACHER_DELETE = "Advisor Teacher is Deleted";
+
+
+    public static final String STUDENT_SAVE = "Student is Saved successfully";
+    public static final String STUDENT_UPDATE = "Student is updated successfully";
+
+
+    public static final String EDUCATION_TERM_SAVE = "Education Term is Saved";
+    public static final String EDUCATION_TERM_UPDATE = "Education Term is Updated Successfully";
+    public static final String EDUCATION_TERM_DELETE = "Education Term is Deleted Successfully";
+
+
+
+    public static final String LESSON_SAVE = "Lesson is Saved";
+    public static final String LESSON_DELETE = "Lesson is Deleted Successfully";
+    public static final String LESSON_FOUND = "Lesson is Found Successfully";
+
 
 
 
