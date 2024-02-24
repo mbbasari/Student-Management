@@ -43,7 +43,6 @@ http.cors().and()
         .csrf().disable()
 
         .exceptionHandling().authenticationEntryPoint(authEntryPointJwt).and()
-
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests().antMatchers(AUTH_WHITE_LIST).permitAll()
         .anyRequest().authenticated();

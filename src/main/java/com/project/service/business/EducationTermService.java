@@ -130,4 +130,8 @@ public class EducationTermService {
                 .object(educationTermMapper.mapEducationTermToEducationTermResponse(educationTermUpdated))
                 .build();
     }
+
+    public EducationTerm getAllEducationTermsById(Long id){
+        return isEducationTermExist(id);
+    }
 }
