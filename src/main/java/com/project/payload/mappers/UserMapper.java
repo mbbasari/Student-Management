@@ -160,6 +160,13 @@ public class UserMapper {
                 .email(studentRequest.getEmail())
                 .built_in(studentRequest.getBuildIn())
                 .build();
+<<<<<<< HEAD
+=======
+
+    }
+
+
+>>>>>>> f43b28c002b955034e8e17b36c343582b289e23a
 
     }
 

@@ -3,9 +3,13 @@ package com.project.service.user;
 import com.project.entity.concretes.user.User;
 import com.project.entity.enums.RoleType;
 import com.project.payload.mappers.UserMapper;
+<<<<<<< HEAD
 import com.project.payload.messages.SuccessMessages;
 import com.project.payload.request.user.StudentRequest;
 import com.project.payload.request.user.StudentRequestWithoutPassword;
+=======
+import com.project.payload.request.user.StudentRequest;
+>>>>>>> f43b28c002b955034e8e17b36c343582b289e23a
 import com.project.payload.response.ResponseMessage;
 import com.project.payload.response.user.StudentResponse;
 import com.project.repository.UserRepository;
@@ -13,6 +17,7 @@ import com.project.service.UserRoleService;
 import com.project.service.helper.MethodHelper;
 import com.project.service.validator.UniquePropertyValidator;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +26,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+=======
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+>>>>>>> f43b28c002b955034e8e17b36c343582b289e23a
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +60,7 @@ public class StudentService {
        student.setUserRole(userRoleService.getUserRole(RoleType.STUDENT));
        student.setActive(true);
        student.setIsAdvisor(Boolean.FALSE);
+<<<<<<< HEAD
        student.setStudentNumber(getLastNumber());
        return ResponseMessage.<StudentResponse>builder()
                .object(userMapper.mapUserToStudentResponse(userRepository.save(student)))
@@ -162,4 +172,17 @@ public class StudentService {
 
 
 
+=======
+       student.setStudentNumber();
+
+
+
+
+
+    }
+
+    private  int getLastNumber(){
+
+    }
+>>>>>>> f43b28c002b955034e8e17b36c343582b289e23a
 }
