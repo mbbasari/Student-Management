@@ -18,23 +18,35 @@ import javax.validation.Valid;
 @RequestMapping("/student")
 @RequiredArgsConstructor
 public class StudentController {
+<<<<<<< HEAD
 
   @PreAuthorize("hasAnyAuthority('Admin')")
   @PostMapping("/save")
   private final StudentService studentService;
 
 
+=======
+  
+  private final StudentService studentService;
+
+
+  @PreAuthorize("hasAnyAuthority('Admin')")
+  @PostMapping("/save")
+>>>>>>> origin/master
   public ResponseEntity<ResponseMessage<StudentResponse>>saveStudent(
       @RequestBody @Valid StudentRequest studentRequest){
     return ResponseEntity.ok(studentService.saveStudent(studentRequest));
   }
 
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> origin/master
   @PreAuthorize("hasAnyAuthority('Student')")
   @PatchMapping("/update")
   public ResponseEntity<String>updateStudent(@RequestBody @Valid
